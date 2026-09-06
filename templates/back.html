@@ -1,0 +1,31 @@
+<div class="big"><a href="{{MidoriLookupURL}}">{{Furigana}}</a></div>
+<hr>
+<div class="pos small">{{POS}}</div>
+<div class="definitions left">{{Definitions}}</div>
+{{#ExampleJP}}
+<div class="example left">
+<div class="jp">{{ExampleJP}}</div>
+<div class="en small">{{ExampleEN}}</div>
+</div>
+{{/ExampleJP}}
+{{#Usage}}
+<details class="left usage">
+<summary>Usage</summary>
+<div class="details-body">{{Usage}}</div>
+</details>
+{{/Usage}}
+{{#Collocations}}
+<details class="left patterns">
+<summary>Common patterns</summary>
+<div class="details-body">{{Collocations}}</div>
+</details>
+{{/Collocations}}
+<script>
+(function () {
+  document.querySelectorAll("details").forEach(function (d) {
+    d.addEventListener("click", function (e) {
+      if (d.open && !e.target.closest("summary")) d.open = false;
+    });
+  });
+})();
+</script>

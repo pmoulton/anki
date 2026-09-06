@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Expandable section styles — preview</title>
+<style>
+  body { font-family: -apple-system, "Hiragino Sans", sans-serif; max-width: 600px;
+    margin: 0 auto; padding: 24px 18px 80px; background: #fff; color: #111;
+    --accent: #5a86c4; --line: #d5dde0; --tint: #f2f6f7; --body: #333; }
+  body.night { background: #111; color: #eee;
+    --accent: #7ea3d8; --line: #3d4a4f; --tint: #222a2d; --body: #cfd6d8; }
+  #mode { position: fixed; top: 12px; right: 12px; padding: 10px 16px;
+    border-radius: 999px; border: 1px solid var(--line); background: var(--tint);
+    color: inherit; font-size: 15px; }
+  section { margin-top: 48px; }
+  h2 { font-size: 20px; margin-bottom: 4px; }
+  .note { font-size: 14px; opacity: 0.65; margin: 0 0 14px; }
+  .demo { font-size: 19px; line-height: 1.5; }
+  .demo summary { cursor: pointer; }
+  .demo .details-body { color: var(--body); }
+
+  /* V1 — hairline rows */
+  .v1 .stack details { border-bottom: 1px solid var(--line); }
+  .v1 .stack details:first-child { border-top: 1px solid var(--line); }
+  .v1 summary { list-style: none; display: flex; justify-content: space-between;
+    align-items: center; font-size: 17px; font-weight: 600; padding: 16px 4px; }
+  .v1 summary::-webkit-details-marker { display: none; }
+  .v1 summary::after { content: "›"; font-size: 24px; color: var(--accent); }
+  .v1 details[open] summary::after { transform: rotate(90deg); }
+  .v1 .details-body { padding: 0 4px 16px; }
+
+  /* V2 — rail cards */
+  .v2 details { margin-top: 10px; border: 1px solid var(--line);
+    border-left: 4px solid var(--accent); border-radius: 12px;
+    padding: 2px 14px 14px; background: var(--tint); }
+  .v2 details + details { margin-top: 6px; }
+  .v2 summary { list-style: none; font-size: 17px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.04em; color: var(--accent);
+    padding: 16px 4px; }
+  .v2 summary::-webkit-details-marker { display: none; }
+  .v2 summary::before { content: "▸"; margin-right: 8px; }
+  .v2 details[open] summary::before { content: "▾"; }
+  .v2 .details-body { padding: 2px 2px 4px; }
+
+  /* V3 — pills */
+  .v3 details { margin-top: 10px; }
+  .v3 summary { list-style: none; background: var(--tint);
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 14px 20px; font-size: 17px; font-weight: 700; color: var(--accent);
+    display: flex; justify-content: space-between; align-items: center; }
+  .v3 summary::-webkit-details-marker { display: none; }
+  .v3 summary::after { content: "+"; font-size: 22px; }
+  .v3 details[open] summary::after { content: "–"; }
+  .v3 .details-body { padding: 12px 20px 6px; }
+
+  /* V4 — badge chevrons */
+  .v4 details { margin-top: 12px; background: var(--tint);
+    border-radius: 14px; padding: 4px 16px 16px; }
+  .v4 details + details { margin-top: 8px; }
+  .v4 summary { list-style: none; display: flex; align-items: center;
+    font-size: 17px; font-weight: 700; padding: 14px 0; }
+  .v4 summary::-webkit-details-marker { display: none; }
+  .v4 summary::before { content: "›"; width: 30px; height: 30px; flex: none;
+    border-radius: 50%; background: var(--accent); color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-right: 12px; }
+  .v4 details[open] summary::before { transform: rotate(90deg); }
+  .v4 .details-body { padding: 0 0 4px 42px; }
+
+  /* V5 — editorial, no chrome */
+  .v5 details { margin-top: 20px; }
+  .v5 summary { list-style: none; font-size: 15px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.55;
+    padding: 12px 0; }
+  .v5 summary::-webkit-details-marker { display: none; }
+  .v5 summary .dot { color: var(--accent); margin-right: 8px; }
+  .v5 .details-body { font-size: 20px; }
+</style>
+</head>
+<body>
+<button id="mode">🌙 night</button>
+<h1>Expandable styles for 理不尽</h1>
+
+<section class="v1"><div class="demo">
+  <h2>1 · Hairline rows</h2>
+  <p class="note">iOS Settings-style. No boxes, dividers only, chevron affordance.</p>
+  <div class="stack">
+    <details><summary>Usage</summary><div class="details-body">Often describes demands, treatment, rules, or situations that feel unfair and make no reasonable sense.</div></details>
+    <details><summary>Common patterns</summary><div class="details-body">理不尽な要求 · 理不尽な扱い · 理不尽に怒られる</div></details>
+  </div>
+</div></section>
+
+<section class="v2"><div class="demo">
+  <h2>2 · Rail cards</h2>
+  <p class="note">Current direction, refined. Tinted card + accent rail + caret.</p>
+  <details><summary>Usage</summary><div class="details-body">Often describes demands, treatment, rules, or situations that feel unfair and make no reasonable sense.</div></details>
+  <details><summary>Common patterns</summary><div class="details-body">理不尽な要求 · 理不尽な扱い · 理不尽に怒られる</div></details>
+</div></section>
+
+<section class="v3"><div class="demo">
+  <h2>3 · Pills</h2>
+  <p class="note">Headers are big friendly buttons. Highest tap confidence, most visual weight.</p>
+  <details><summary>Usage</summary><div class="details-body">Often describes demands, treatment, rules, or situations that feel unfair and make no reasonable sense.</div></details>
+  <details><summary>Common patterns</summary><div class="details-body">理不尽な要求 · 理不尽な扱い · 理不尽に怒られる</div></details>
+</div></section>
+
+<section class="v4"><div class="demo">
+  <h2>4 · Badge chevrons</h2>
+  <p class="note">Soft tinted wells with a filled circular chevron. Playful, clear state.</p>
+  <details><summary>Usage</summary><div class="details-body">Often describes demands, treatment, rules, or situations that feel unfair and make no reasonable sense.</div></details>
+  <details><summary>Common patterns</summary><div class="details-body">理不尽な要求 · 理不尽な扱い · 理不尽に怒られる</div></details>
+</div></section>
+
+<section class="v5"><div class="demo">
+  <h2>5 · Editorial</h2>
+  <p class="note">No chrome at all — small caps labels, content speaks. Calmest, weakest affordance.</p>
+  <details><summary><span class="dot">●</span>Usage</summary><div class="details-body">Often describes demands, treatment, rules, or situations that feel unfair and make no reasonable sense.</div></details>
+  <details><summary><span class="dot">●</span>Common patterns</summary><div class="details-body">理不尽な要求 · 理不尽な扱い · 理不尽に怒られる</div></details>
+</div></section>
+
+<script>
+  document.getElementById("mode").onclick = function () {
+    var n = document.body.classList.toggle("night");
+    this.textContent = n ? "☀️ day" : "🌙 night";
+  };
+  document.querySelectorAll("details").forEach(function (d) {
+    d.addEventListener("click", function (e) {
+      if (d.open && !e.target.closest("summary")) d.open = false;
+    });
+  });
+</script>
+</body>
+</html>

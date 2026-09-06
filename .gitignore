@@ -1,0 +1,21 @@
+# Python environment
+.venv/
+
+# Build / generated outputs (regenerate with python -m midori_anki.cli)
+out/
+*_anki/
+*.apkg
+anki_import.tsv
+enriched.json
+match_report.txt
+
+# Python caches
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# macOS
+.DS_Store
+
+# Local preview mockups
+previews/

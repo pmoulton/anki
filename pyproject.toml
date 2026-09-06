@@ -1,0 +1,12 @@
+[project]
+name = "midori-anki"
+version = "0.1.0"
+description = "Midori bookmarks -> rich Anki cards (prototype)"
+requires-python = ">=3.10"
+dependencies = ["genanki", "jamdict", "jamdict_data"]
+
+[tool.setuptools.packages.find]
+include = ["midori*"]
+
+[project.scripts]
+midori-anki = "midori.cli:main"

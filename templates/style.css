@@ -1,0 +1,107 @@
+.card {
+  font-size: 22px;
+  text-align: center;
+  --text-color: black;
+  --pos-color: #5e8b9e;
+  --en-color: #555;
+  --summary-color: #5e8b9e;
+  --num-color: #1e8e5a;
+  --border-color: #d5dde0;
+  --section-bg: #f2f6f7;
+  --accent: #5a86c4;
+  word-wrap: break-word;
+}
+.card.night_mode {
+  font-size: 22px;
+  text-align: center;
+  --text-color: white;
+  --pos-color: #8fc1d4;
+  --en-color: #b9c4c7;
+  --summary-color: #8fc1d4;
+  --num-color: #5fd39a;
+  --border-color: #3d4a4f;
+  --section-bg: #222a2d;
+  --accent: #7ea3d8;
+  word-wrap: break-word;
+}
+div, a {
+  color: var(--text-color);
+}
+.card a { text-decoration-color: #a1b2ba; }
+
+.big { font-size: 48px; }
+.left { text-align: left; }
+.small { font-size: 18px; }
+
+.pos {
+  color: var(--pos-color);
+  margin-bottom: 10px;
+}
+.definitions {
+  line-height: 1.55;
+}
+.definitions ol {
+  margin: 8px 0;
+  padding-left: 1.4em;
+}
+.definitions ol li::marker {
+  color: var(--num-color);
+  font-weight: bold;
+}
+.answer-reading {
+  font-size: 28px;
+  margin-top: 8px;
+}
+.example {
+  margin-top: 18px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--border-color);
+}
+.jp { font-size: 22px; }
+.en {
+  margin-top: 5px;
+  color: var(--en-color);
+}
+details {
+  border-top: 1px solid var(--border-color);
+}
+details:last-of-type {
+  border-bottom: 1px solid var(--border-color);
+}
+summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 16px 4px;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+summary::after {
+  content: "›";
+  font-size: 24px;
+  color: var(--accent);
+}
+details[open] summary::after {
+  transform: rotate(90deg);
+}
+.details-body {
+  padding: 0 4px 16px;
+  font-size: 19px;
+  line-height: 1.5;
+}
+.answer-reading a {
+  text-decoration-color: #a1b2ba;
+}
+ruby {
+  ruby-align: center;
+}
+rt {
+  font-size: 0.42em;
+  opacity: 0.75;
+  letter-spacing: 0.05em;
+}

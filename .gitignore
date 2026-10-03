@@ -8,6 +8,7 @@ out/
 anki_import.tsv
 enriched.json
 match_report.txt
+run_stats.json
 
 # Python caches
 __pycache__/

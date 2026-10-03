@@ -75,6 +75,25 @@ def test_merge_reuses_unchanged_rows_verbatim():
     assert records[1]["match_status"] == "exact"
 
 
+def test_run_stats_counts_and_diff():
+    from midori.cli import fingerprint, run_stats
+    kept = {"expression": "隙", "reading": "すき", "source_gloss": "gap",
+            "match_status": "exact", "candidates": [1]}
+    new = {"expression": "残酷", "reading": "ざんこく", "source_gloss": "cruel",
+           "match_status": "missing", "candidates": []}
+    prior = {fingerprint(kept): kept,
+             fingerprint({"expression": "削除", "reading": "さくじょ",
+                          "source_gloss": "gone"}):
+             {"expression": "削除", "reading": "さくじょ"}}
+    stats = run_stats([kept, new], prior, "in.tsv", "out", "deck")
+    assert (stats["total"], stats["exact"], stats["missing"]) == (2, 1, 1)
+    assert (stats["reused"], stats["new"]) == (1, 1)
+    assert stats["dropped"] == ["削除"]
+    assert stats["review"] == [{"expression": "残酷", "reading": "ざんこく",
+                                "status": "missing", "candidates": []}]
+    assert stats["deck"] == "deck"
+
+
 def test_default_outdir_sits_next_to_input():
     from midori.cli import default_outdir
     assert default_outdir("/tmp/words.tsv") == "/tmp/words_anki"

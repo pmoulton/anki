@@ -1,5 +1,7 @@
 """CLI: bookmarks.tsv -> enriched.json, anki_import.tsv, deck.apkg, match_report.txt."""
 import argparse
+from collections import Counter
+from datetime import datetime, timezone
 import json
 import os
 from typing import Any, Optional
@@ -64,6 +66,35 @@ def default_outdir(input_path: str) -> str:
     return os.path.join(os.path.dirname(os.path.abspath(input_path)), base + "_anki")
 
 
+def run_stats(records: list[Record], prior: dict[str, Record],
+              input_path: str, outdir: str, deck_name: str) -> dict[str, Any]:
+    """Machine-readable run summary, persisted as run_stats.json."""
+    counts = Counter(r["match_status"] for r in records)
+    current = {fingerprint(r) for r in records}
+    reused = sum(1 for k in current if k in prior)
+    dropped = [prior[k]["expression"] for k in prior if k not in current]
+    review = [
+        {"expression": r["expression"], "reading": r["reading"],
+         "status": r["match_status"], "candidates": r.get("candidates", [])}
+        for r in records if r["match_status"] in ("ambiguous", "missing")
+    ]
+    return {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "input": os.path.abspath(input_path),
+        "outdir": os.path.abspath(outdir),
+        "deck": deck_name,
+        "total": len(records),
+        "exact": counts.get("exact", 0),
+        "inferred": counts.get("inferred", 0),
+        "ambiguous": counts.get("ambiguous", 0),
+        "missing": counts.get("missing", 0),
+        "reused": reused,
+        "new": len(records) - reused,
+        "dropped": dropped,
+        "review": review,
+    }
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--input", default="bookmarks.tsv")
@@ -99,6 +130,9 @@ def main():
     )
     write_apkg(records, model, args.deck_name, os.path.join(args.outdir, "deck.apkg"))
     summary = write_report(records, os.path.join(args.outdir, "match_report.txt"))
+    stats = run_stats(records, prior, args.input, args.outdir, args.deck_name)
+    with open(os.path.join(args.outdir, "run_stats.json"), "w", encoding="utf-8") as f:
+        json.dump(stats, f, ensure_ascii=False, indent=2)
     print(summary)
     print(f"wrote {len(records)} records to {args.outdir}/ "
           f"({reused} reused, {len(records) - reused} new)")

@@ -80,6 +80,9 @@ Each run produces, in the output directory:
 - `anki_import.tsv` — the same data as a TSV for inspection/debugging
 - `match_report.txt` — match quality summary plus the ambiguous and
   unmatched entries worth reviewing by hand
+- `run_stats.json` — the same stats plus the incremental diff
+  (reused/new/dropped) in machine-readable form, so each output
+  folder carries its own history
 
 Card appearance lives in `templates/` (`front.html`, `back.html`,
 `style.css`) and can be changed without touching the data pipeline.
